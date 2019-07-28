@@ -4,6 +4,27 @@ var express = require('express'),
 
 var Hospital = require('../models/hospital');
 
+// Obtener todos los hospitales
+app.get('/', (req, res) => {
+    Hospital.find({})
+    .exec((err, hospitales) => {
+
+        if (err) {
+
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error cargando hospitales',
+                erros: err
+            });
+
+        }
+
+        res.status(200).json({
+            ok: true,
+            hospitales
+        });
+    });
+});
 
 app.post('/', mdAutentication.verificaToken, (req, res) => {
 
